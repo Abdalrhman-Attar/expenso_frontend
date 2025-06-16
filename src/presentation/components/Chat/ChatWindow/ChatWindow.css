@@ -1,0 +1,49 @@
+@import "../../../../styles/_variables.css";
+
+.chat-window {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--background-color, #fff);
+  color: var(--text-color, #222);
+}
+
+.cw-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-md);
+  background-color: var(--chat-bg, var(--background-color, #fff));
+  color: var(--text-color, #222);
+}
+
+.cw-loading {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--text-color, #222);
+}
+
+.dark-mode .cw-loading {
+  color: var(--text-color) !important;
+}
+
+.dark-mode .cw-loading .spinner-border {
+  color: var(--text-color) !important;
+}
+
+.dark-mode .cw-loading .spinner-border::before {
+  border-color: transparent !important;
+  border-right-color: var(--text-color) !important;
+}
+
+.dark-mode .cw-loading {
+  background-color: var(--card-background) !important;
+  color: var(--text-color) !important;
+}
+
+.dark-mode .cw-loading .spinner-border {
+  width: 1rem;
+  height: 1rem;
+  border-width: 0.2em !important;
+  border-color: var(--text-color)  transparent transparent transparent !important;
+}

@@ -1,0 +1,23 @@
+@import "../../../../styles/_variables.css";
+
+.td-field {
+  margin-bottom: var(--spacing-md);
+}
+
+.td-field .form-label {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.td-field .form-control,
+.td-field .form-select {
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+}
+
+.td-field .form-control:focus,
+.td-field .form-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: none;
+}

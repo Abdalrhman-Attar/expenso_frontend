@@ -1,0 +1,121 @@
+@import "../../../../styles/_variables.css";
+
+.app-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: transparent !important;
+  border: none !important;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+.app-navbar.scrolled .navbar-inner {
+  background-color: var(--secondary-color);
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background-color: var(--card-background);
+  border-radius: var(--radius-full);
+  box-shadow: 0 0px 0px var(--shadow-color);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.navbar-brand-custom {
+  font-size: var(--font-2xl);
+  font-weight: 700;
+  color: var(--primary-color);
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.navbar-brand-custom:hover {
+  color: var(--primary-hover);
+  transform: scale(1.05);
+}
+
+.nav-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-lg);
+}
+
+.nav-link-custom {
+  font-size: var(--font-md);
+  color: var(--text-color);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-md);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.nav-link-custom:hover {
+  background-color: var(--primary-color);
+  color: var(--background-color);
+}
+
+.nav-link-custom:focus,
+.nav-link-custom:active,
+.nav-link-custom.active {
+  color: var(--primary-color) !important;
+  background-color: transparent;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+@media (max-width: 991px) {
+  .navbar-inner {
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+  }
+  .navbar-inner > .navbar-brand-custom,
+  .navbar-inner > .navbar-toggler {
+    flex: none;
+  }
+  .navbar-collapse {
+    width: 100%;
+  }
+  .nav-center,
+  .nav-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) 0;
+  }
+  .navbar-inner:has(.navbar-collapse.show) {
+    border-radius: var(--radius-md);
+  }
+}
+
+.desktop-only {
+  display: none;
+}
+.mobile-only {
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .desktop-only {
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media (max-width: 990px) {
+  .mobile-only.toggle-row {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin: var(--spacing-sm) 0;
+  }
+}

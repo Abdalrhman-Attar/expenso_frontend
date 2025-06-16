@@ -1,0 +1,58 @@
+@import "../../../../styles/_variables.css";
+
+.notifications-table {
+  padding: var(--spacing-md);
+}
+
+.nt-table th,
+.nt-table td {
+  border: 1px solid var(--border-color);
+  padding: var(--spacing-sm);
+  color: var(--text-color);
+  background-color: var(--card-background);
+}
+
+.nt-table thead th {
+  background-color: var(--secondary-color);
+  font-weight: 600;
+}
+
+.nt-table tbody tr:nth-child(odd) {
+  background-color: var(--background-color);
+}
+
+.nt-table tbody tr:nth-child(even) {
+  background-color: var(--card-background);
+}
+
+.nt-table tbody tr:hover {
+  background-color: var(--primary-hover);
+  color: var(--card-background);
+}
+
+/* Notification type coloring */
+.nt-type.reminder {
+  color: var(--info-color);
+}
+.nt-type.warning {
+  color: var(--warning-color);
+}
+.nt-type.info {
+  color: var(--info-color);
+}
+.nt-type.reminder,
+.nt-type.info,
+.nt-type.warning {
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.nt-actions .action-icon {
+  margin-right: var(--spacing-sm);
+  cursor: pointer;
+  transition: color 0.2s ease;
+  color: var(--text-color);
+}
+.nt-actions .action-icon:hover {
+  color: var(--primary-hover);
+}

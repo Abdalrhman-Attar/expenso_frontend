@@ -1,0 +1,46 @@
+{
+    "hero": {
+        "title": "Take Control of Your Finances",
+        "subtitle": "The smart way to track expenses..."
+    },
+    "nav": {
+        "brand": "Expenso 💸",
+        "features": "Features",
+        "howItWorks": "How It Works",
+        "pricing": "Pricing",
+        "contact": "Contact",
+        "login": "Log In",
+        "signup": "Sign Up"
+    },
+    "features": {
+        "title": "Features",
+        "description": "Discover the powerful features that make our app the best choice for managing your finances.",
+        "feature1": {
+            "title": "Real-Time Expense Tracking",
+            "description": "Monitor your spending as it happens, with instant updates and notifications."
+        },
+        "feature2": {
+            "title": "Budgeting Tools",
+            "description": "Set budgets and track your progress towards financial goals effortlessly."
+        },
+        "feature3": {
+            "title": "Secure Data Protection",
+            "description": "Your financial data is safe with us, protected by industry-leading security measures."
+        }
+    },
+    "howItWorks": {
+        "title": "How It Works",
+        "step1": {
+            "title": "Sign Up",
+            "description": "Create your account in just a few minutes."
+        },
+        "step2": {
+            "title": "Connect Your Accounts",
+            "description": "Link your bank accounts and credit cards for seamless tracking."
+        },
+        "step3": {
+            "title": "Start Tracking",
+            "description": "Begin monitoring your expenses and managing your budget effortlessly."
+        }
+    }
+}

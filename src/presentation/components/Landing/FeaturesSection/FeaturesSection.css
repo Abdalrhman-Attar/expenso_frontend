@@ -1,0 +1,142 @@
+@import "../../../../styles/_variables.css";
+
+.features-section {
+  padding: 6rem 0;
+  background: var(--background-color);
+  min-height: 100vh;
+  position: relative;
+}
+
+.feature-card {
+  border: none;
+  border-radius: 20px;
+  padding: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--card-background);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--primary-gradient);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+
+.feature-card:hover::before {
+  transform: scaleX(1);
+}
+
+.feature-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+}
+
+.feature-description {
+  color: var(--text-color);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  opacity: 0.8;
+}
+
+.feature-arrow {
+  opacity: 0;
+  transition: all 0.3s ease;
+  color: var(--primary-color);
+}
+
+.feature-card:hover .feature-arrow {
+  opacity: 1;
+  transform: translateX(5px);
+}
+
+.section-header {
+  margin-bottom: 4rem;
+}
+
+.section-badge {
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--primary-color);
+  color: white;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.section-subtitle {
+  font-size: 1.25rem;
+  color: var(--text-color);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+@media (max-width: 991.98px) {
+  .footer-content {
+    flex-direction: column;
+    gap: 0;
+  }
+  .cta-title {
+    font-size: 1.75rem;
+  }
+  .section-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .cta-section,
+  .pricing-section,
+  .features-section,
+  .how-it-works-section {
+    padding: 3rem 0;
+  }
+  .footer-section {
+    padding: 2rem 0 1rem 0;
+  }
+  .cta-trust {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+  .pricing-card {
+    margin-bottom: 2rem;
+  }
+  .pricing-card:last-child {
+    margin-bottom: 0;
+  }
+}

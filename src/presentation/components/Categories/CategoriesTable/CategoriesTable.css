@@ -1,0 +1,53 @@
+@import "../../../../styles/_variables.css";
+
+.categories-table {
+  padding: var(--spacing-md);
+}
+
+.categories-table .form-control::placeholder {
+    color: var(--text-color);
+    opacity: 0.6;
+  }
+  
+
+.categories-table .form-control,
+.categories-table .form-select {
+  background-color: var(--card-background);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.categories-table .btn-outline-primary {
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+.categories-table .btn-outline-primary:hover {
+  background-color: var(--primary-hover);
+  color: var(--card-background);
+  border-color: var(--primary-hover);
+}
+
+.ct-table th,
+.ct-table td {
+  border: 1px solid var(--border-color);
+  padding: var(--spacing-sm);
+  color: var(--text-color);
+  background-color: var(--card-background);
+}
+.ct-table thead th {
+  background-color: var(--secondary-color);
+}
+.ct-table tbody tr:hover {
+  background-color: var(--primary-hover);
+  color: var(--card-background);
+}
+
+.ct-actions .action-icon {
+  margin-right: var(--spacing-sm);
+  cursor: pointer;
+  transition: color 0.2s ease;
+  color: var(--text-color);
+}
+.ct-actions .action-icon:hover {
+  color: var(--primary-color);
+}

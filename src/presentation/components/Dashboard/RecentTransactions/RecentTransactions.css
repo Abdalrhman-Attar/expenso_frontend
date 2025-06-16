@@ -1,0 +1,108 @@
+@import "../../../../styles/_variables.css";
+
+.recent-transactions {
+  position: relative;
+  background-color: var(--card-background);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.recent-transactions .rt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.recent-transactions .rt-header h4 {
+  font-size: var(--font-lg);
+  margin: 0;
+}
+
+.recent-transactions .rt-add-btn {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  padding: 0;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.recent-transactions .rt-add-btn:hover {
+  color: var(--primary-hover);
+}
+
+.transaction-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-xs) 0;
+  border-bottom: 1px solid var(--border-color);
+  position: relative;
+}
+
+.transaction-item:last-child {
+  border-bottom: none;
+}
+
+.transaction-item .info {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+
+.transaction-item .desc {
+  color: var(--text-color);
+}
+
+.transaction-item .amount {
+  font-weight: 600;
+}
+
+.transaction-item .amount.income {
+  color: var(--success-color);
+}
+
+.transaction-item .amount.expense {
+  color: var(--danger-color);
+}
+
+.transaction-item .date {
+  color: var(--text-color);
+  opacity: 0.7;
+}
+
+.transaction-item .actions {
+  display: none;
+  gap: var(--spacing-xs);
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.transaction-item .actions svg {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.transaction-item .actions svg:hover {
+  color: var(--primary-color);
+}
+
+.transaction-item:hover .actions {
+  display: flex;
+}
+@media (max-width: 600px) {
+  .transaction-item .actions {
+    display: flex;
+  }
+}
