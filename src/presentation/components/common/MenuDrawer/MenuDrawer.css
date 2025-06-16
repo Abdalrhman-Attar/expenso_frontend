@@ -1,0 +1,148 @@
+@import "../../../../styles/_variables.css";
+
+.menu-drawer {
+  background-color: var(--secondary-color);
+  border: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease;
+}
+
+.drawer-header {
+  background-color: var(--secondary-color);
+  border-bottom: 1px solid var(--text-color);
+  transition: background-color 0.3s ease;
+}
+
+.drawer-title {
+  font-size: var(--font-xl);
+  font-weight: bold;
+  color: var(--primary-color);
+  margin: 0;
+}
+
+.drawer-body {
+  padding: 0;
+  background-color: var(--secondary-color);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.drawer-nav {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.nav-items-drawer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-link-drawer {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-md);
+  color: var(--text-color);
+  border-radius: var(--border-radius);
+  transition: all 0.2s ease;
+  text-decoration: none;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.nav-link-drawer:hover {
+  background-color: var(--primary-hover);
+  color: #fff;
+  text-decoration: none;
+}
+
+.nav-link-drawer.active {
+  background-color: var(--primary-color);
+  color: #fff;
+  font-weight: 600;
+}
+
+.nav-link-drawer .icon {
+  font-size: 1.4rem;
+  margin-right: var(--spacing-md);
+  color: inherit;
+  transition: color 0.2s ease;
+  width: 20px;
+  text-align: center;
+}
+
+.nav-link-drawer .link-text {
+  white-space: nowrap;
+  font-weight: inherit;
+}
+
+.logout-wrapper {
+  padding: var(--spacing-sm);
+  border-top: 1px solid var(--border-color);
+  margin-top: auto;
+}
+
+.logout-button {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: var(--danger-color);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius);
+  transition: all 0.2s ease;
+}
+
+.logout-button .icon {
+  font-size: 1.4rem;
+  color: var(--danger-color);
+  margin-right: var(--spacing-md);
+  width: 20px;
+  text-align: center;
+}
+
+.logout-button:hover {
+  background-color: var(--danger-color);
+  color: #fff;
+}
+
+.logout-button:hover .icon {
+  color: #fff;
+}
+
+.btn-close:hover {
+  background-color: var(--primary-hover);
+  color: #fff;
+}
+
+@media (min-width: 769px) {
+  .menu-drawer {
+    display: none;
+  }
+}
+
+.menu-drawer .offcanvas-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.menu-drawer.show {
+  transform: translateX(0);
+}
+
+.menu-drawer .offcanvas-header {
+  padding: var(--spacing-md);
+}
+
+.menu-drawer .offcanvas-body {
+  padding: 0;
+}

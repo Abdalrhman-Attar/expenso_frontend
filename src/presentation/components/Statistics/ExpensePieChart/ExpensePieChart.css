@@ -1,0 +1,15 @@
+@import "../../../../styles/_variables.css";
+
+.chart-container {
+  background-color: var(--card-background);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.chart-container h5 {
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-lg);
+  color: var(--text-color);
+}

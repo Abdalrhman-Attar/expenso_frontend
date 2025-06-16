@@ -1,0 +1,104 @@
+@import "../../../../styles/_variables.css";
+
+.transactions-table {
+  padding: var(--spacing-md);
+}
+
+.tt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.tt-filters .form-control,
+.tt-filters .form-select {
+  background-color: var(--card-background);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+.tt-filters .form-control::placeholder {
+  color: var(--text-color);
+  opacity: 0.6;
+}
+
+.tt-sort .form-select {
+  background-color: var(--card-background);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+.tt-sort-btn {
+  margin-left: var(--spacing-sm);
+}
+.tt-sort-btn.btn-outline-primary {
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+.tt-sort-btn.btn-outline-primary:hover {
+  background-color: var(--primary-hover);
+  color: var(--card-background);
+  border-color: var(--primary-hover);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+.btn-secondary:hover {
+  background-color: var(--border-color);
+}
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+.tt-table th,
+.tt-table td {
+  border: 1px solid var(--border-color);
+  padding: var(--spacing-sm);
+  color: var(--text-color);
+  background-color: var(--card-background);
+}
+.tt-table thead th {
+  background-color: var(--secondary-color);
+  font-weight: 600;
+}
+.tt-table tbody tr:nth-child(odd) {
+  background-color: var(--background-color);
+}
+.tt-table tbody tr:nth-child(even) {
+  background-color: var(--card-background);
+}
+.tt-table tbody tr:hover {
+  background-color: var(--primary-hover);
+  color: var(--card-background);
+}
+
+.amount-expense {
+  color: var(--danger-color);
+}
+.amount-income {
+  color: var(--success-color);
+}
+.tt-table .amount.income {
+  color: var(--success-color);
+}
+
+.tt-table .amount.expense {
+  color: var(--danger-color);
+}
+
+.tt-actions .action-icon {
+  margin-right: var(--spacing-sm);
+  cursor: pointer;
+  transition: color 0.2s ease;
+  color: var(--text-color);
+}
+.tt-actions .action-icon:hover {
+  color: var(--primary-color);
+}

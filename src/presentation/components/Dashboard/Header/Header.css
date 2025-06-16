@@ -1,0 +1,18 @@
+@import "../../../../styles/_variables.css";
+
+.dashboard-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.dashboard-greeting {
+  font-size: var(--font-2xl);
+  color: var(--text-color);
+}
+
+.dashboard-subtitle {
+  font-size: var(--font-md);
+  color: var(--text-color);
+  opacity: 0.8;
+}

@@ -1,0 +1,15 @@
+@import "../../../../styles/_variables.css";
+
+.time-filter {
+  width: 100%;
+  background-color: var(--card-background);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-sm);
+}
+
+.time-filter option {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}

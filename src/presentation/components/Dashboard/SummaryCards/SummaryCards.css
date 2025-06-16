@@ -1,0 +1,28 @@
+@import "../../../../styles/_variables.css";
+
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.summary-card {
+  background-color: var(--card-background);
+  padding: var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 4px var(--shadow-color);
+  text-align: center;
+}
+
+.summary-card h3 {
+  margin-bottom: var(--spacing-xs);
+  font-size: var(--font-lg);
+  color: var(--text-color);
+}
+
+.summary-card p {
+  font-size: var(--font-2xl);
+  font-weight: bold;
+  color: var(--primary-color);
+}
