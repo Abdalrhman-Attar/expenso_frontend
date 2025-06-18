@@ -1,6 +1,9 @@
 // src/presentation/components/Statistics/IncomePieChart/IncomePieChart.jsx
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
-import { useStore, useTheme } from "../../../../application/utils/hooks";
+import React from "react";
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { useStore } from "../../../../application/utils/hooks";
+import Transaction from "../../../../domain/entities/Transaction";
+import Category from "../../../../domain/entities/Category";
 import "./IncomePieChart.css";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#A28FD0"];
@@ -8,13 +11,16 @@ const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#A28FD0"];
 const IncomePieChart = ({ timePeriod }) => {
   const {
     theme,
-    state: { transactions },
+    state: { transactions: rawTx, categories: rawCats },
   } = useStore();
+
+  const transactions = rawTx.map((t) => new Transaction(t));
+  const categories = rawCats.map((c) => new Category(c));
   const now = new Date();
 
-  // filter by income and selected period
+  // Filter only incomes in the selected period
   const filtered = transactions
-    .filter((tx) => tx.type === "Income")
+    .filter((tx) => tx.isIncome())
     .filter((tx) => {
       const d = new Date(tx.date);
       if (timePeriod === "Daily") {
@@ -29,27 +35,33 @@ const IncomePieChart = ({ timePeriod }) => {
       return true;
     });
 
-  // aggregate by category
-  const aggregated = filtered.reduce((acc, tx) => {
-    acc[tx.category] = (acc[tx.category] || 0) + Math.abs(tx.amount);
+  // Sum amounts by category ID
+  const aggByCatId = filtered.reduce((acc, tx) => {
+    const catId = tx.category_id;
+    acc[catId] = (acc[catId] || 0) + Math.abs(tx.amount);
     return acc;
   }, {});
-  const data = Object.entries(aggregated).map(([name, value]) => ({
-    name,
-    value,
-  }));
+
+  // Build data array matching category names
+  const data = categories
+    .map((cat) => ({
+      name: cat.name,
+      value: aggByCatId[cat.id] || 0,
+    }))
+    .filter((entry) => entry.value > 0);
 
   return (
     <div className={`chart-container ${theme}-mode`}>
       <h5>Income Breakdown</h5>
       <ResponsiveContainer width="100%" height={250}>
         <PieChart>
-          <Pie data={data} dataKey="value" nameKey="name" outerRadius={80} label>
+          <Pie data={data} dataKey="value" nameKey="name" outerRadius={80} label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}>
             {data.map((_, i) => (
-              <Cell key={`cell-${i}`} fill={COLORS[i % COLORS.length]} />
+              <Cell key={`income-cell-${i}`} fill={COLORS[i % COLORS.length]} />
             ))}
           </Pie>
           <Tooltip formatter={(val) => `$${val.toFixed(2)}`} />
+          <Legend verticalAlign="bottom" height={36} />
         </PieChart>
       </ResponsiveContainer>
     </div>
