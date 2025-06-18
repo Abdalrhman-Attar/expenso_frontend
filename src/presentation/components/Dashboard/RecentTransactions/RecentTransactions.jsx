@@ -1,13 +1,18 @@
-import { useState } from "react";
+// src/presentation/components/Dashboard/RecentTransactions/RecentTransactions.jsx
+import { useState, useRef, useEffect } from "react";
 import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
-import { useStore } from "../../../../application/utils/hooks";
+import { useStore, useTheme } from "../../../../application/utils/hooks";
 import TransactionDialog from "../../../components/common/TransactionDialog/TransactionDialog";
 import Dialog from "../../../components/common/Dialog/Dialog";
 import "./RecentTransactions.css";
 
 const RecentTransactions = () => {
-  const [state, dispatch] = useStore();
-  const recent = [...state.transactions].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
+  const {
+    theme,
+    state: { transactions },
+    removeTransaction,
+  } = useStore();
+  const recent = [...transactions].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
 
   const [showTxDialog, setShowTxDialog] = useState(false);
   const [editTxn, setEditTxn] = useState(null);
@@ -32,8 +37,8 @@ const RecentTransactions = () => {
     setToDeleteId(id);
     setShowConfirm(true);
   };
-  const confirmDelete = () => {
-    dispatch({ type: "REMOVE_TRANSACTION", payload: toDeleteId });
+  const confirmDelete = async () => {
+    await removeTransaction(toDeleteId);
     setShowConfirm(false);
     setToDeleteId(null);
   };
@@ -44,7 +49,7 @@ const RecentTransactions = () => {
 
   return (
     <>
-      <div className="recent-transactions card">
+      <div className={`recent-transactions card ${theme}-mode`}>
         <div className="rt-header">
           <h4>Recent Transactions</h4>
           <button className="rt-add-btn" onClick={openNew} aria-label="Add Transaction">
@@ -57,10 +62,10 @@ const RecentTransactions = () => {
             <li key={t.id} className="transaction-item">
               <div className="info">
                 <span className="desc">{t.description}</span>
-                <span className={`amount ${t.type}`}>
-                  {t.type === "income" ? "+" : "-"}${t.amount.toFixed(2)}
+                <span className={`amount ${t.isIncome() ? "income" : "expense"}`}>
+                  {t.isIncome() ? "+" : "-"}${t.amount.toFixed(2)}
                 </span>
-                <span className="date">{new Date(t.date).toLocaleDateString()}</span>
+                <span className="date">{t.date.toLocaleDateString()}</span>
               </div>
               <div className="actions">
                 <FaEdit onClick={() => openEdit(t)} />

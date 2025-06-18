@@ -1,3 +1,4 @@
+// src/presentation/components/Categories/CategoriesTable/CategoriesTable.jsx
 import { useState } from "react";
 import { Table, Form, Row, Col, Button, Badge } from "react-bootstrap";
 import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
@@ -7,7 +8,12 @@ import "./CategoriesTable.css";
 
 const CategoriesTable = () => {
   const { theme } = useTheme();
-  const [{ categories }, dispatch] = useStore();
+  const {
+    state: { categories },
+    addCategory,
+    updateCategory,
+    removeCategory,
+  } = useStore();
 
   const [search, setSearch] = useState("");
   const [sortField, setSortField] = useState("name");
@@ -26,19 +32,28 @@ const CategoriesTable = () => {
       return 0;
     });
 
-  const handleAdd = (newCat) => dispatch({ type: "SET_CATEGORIES", payload: [newCat, ...categories] });
+  const handleAdd = async (newCat) => {
+    await addCategory(newCat);
+    setShowDialog(false);
+  };
 
-  const handleUpdate = (updated) =>
-    dispatch({
-      type: "SET_CATEGORIES",
-      payload: categories.map((c) => (c.id === updated.id ? updated : c)),
-    });
+  const handleUpdate = async (updatedCat) => {
+    await updateCategory(updatedCat.id, updatedCat);
+    setShowDialog(false);
+    setEditCat(null);
+  };
 
-  const handleDelete = (id) =>
-    dispatch({
-      type: "SET_CATEGORIES",
-      payload: categories.filter((c) => c.id !== id),
-    });
+  const handleDelete = async (id) => {
+    try {
+      await removeCategory(id);
+    } catch (err) {
+      if (err.response?.status === 400) {
+        alert("This category is still linked to transactions and cannot be deleted.");
+      } else {
+        console.error("Failed to delete category", err);
+      }
+    }
+  };
 
   const openNew = () => {
     setEditCat(null);
@@ -64,11 +79,11 @@ const CategoriesTable = () => {
             <Form.Select value={sortField} onChange={(e) => setSortField(e.target.value)}>
               <option value="name">Sort by Name</option>
               <option value="type">Sort by Type</option>
-              <option value="createdAt">Sort by Date</option>
+              <option value="created_at">Sort by Date</option>
             </Form.Select>
           </Col>
           <Col md={1}>
-            <Button variant="outline-primary" onClick={() => setSortAsc(!sortAsc)}>
+            <Button variant="outline-primary" onClick={() => setSortAsc((prev) => !prev)}>
               {sortAsc ? "Asc" : "Desc"}
             </Button>
           </Col>
@@ -95,7 +110,7 @@ const CategoriesTable = () => {
                 <td>
                   <Badge bg={cat.type === "Income" ? "success" : "danger"}>{cat.type}</Badge>
                 </td>
-                <td>{cat.createdAt}</td>
+                <td>{new Date(cat.created_at).toLocaleDateString()}</td>
                 <td className="ct-actions">
                   <FaEdit className="action-icon" onClick={() => openEdit(cat)} />
                   <FaTrash className="action-icon" onClick={() => handleDelete(cat.id)} />
