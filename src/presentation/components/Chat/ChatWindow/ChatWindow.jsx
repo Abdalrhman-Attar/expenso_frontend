@@ -9,7 +9,10 @@ import { generateContentWithGemini } from "../../../../infrastructure/api/gemini
 
 const ChatWindow = () => {
   const { theme } = useTheme();
-  const [{ transactions }] = useStore();
+  const {
+    state: { transactions },
+  } = useStore();
+
   const [messages, setMessages] = useState([
     {
       sender: "bot",
@@ -48,6 +51,8 @@ const ChatWindow = () => {
           content: {
             text: "Sorry, something went wrong. Please try again.",
             intent: "error",
+            data: null,
+            visualization: null,
           },
         },
       ]);
@@ -62,11 +67,13 @@ const ChatWindow = () => {
         {messages.map((msg, i) => (
           <Message key={i} sender={msg.sender} content={msg.content} />
         ))}
+
         {isLoading && (
           <ListGroup.Item className="cw-loading">
             <Spinner animation="border" size="sm" /> Analyzing…
           </ListGroup.Item>
         )}
+
         <div ref={endRef} />
       </ListGroup>
 

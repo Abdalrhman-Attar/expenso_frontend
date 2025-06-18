@@ -1,14 +1,19 @@
+// src/presentation/components/Notifications/NotificationsTable/NotificationsTable.jsx
 import { Table } from "react-bootstrap";
-import {  FaTrash } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 import { useStore, useTheme } from "../../../../application/utils/hooks";
 import "./NotificationsTable.css";
 
 const NotificationsTable = () => {
-  const { theme } = useTheme();
-  const [{ notifications }, dispatch] = useStore();
+  const {
+    theme,
+    state: { notifications },
+    removeNotification,
+  } = useStore();
 
-  const handleMarkRead = (id) => dispatch({ type: "REMOVE_NOTIFICATION", payload: id });
-  const handleDelete = (id) => dispatch({ type: "REMOVE_NOTIFICATION", payload: id });
+  const handleDelete = async (id) => {
+    await removeNotification(id);
+  };
 
   return (
     <div className={`notifications-table card ${theme}-mode`}>
@@ -26,7 +31,7 @@ const NotificationsTable = () => {
             <tr key={n.id}>
               <td>{n.message}</td>
               <td className={`nt-type ${n.type}`}>{n.type.charAt(0).toUpperCase() + n.type.slice(1)}</td>
-              <td>{new Date(n.date).toLocaleString()}</td>
+              <td>{n.scheduled_for.toLocaleString()}</td>
               <td className="nt-actions">
                 <FaTrash className="action-icon delete" onClick={() => handleDelete(n.id)} />
               </td>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import Dialog from "../Dialog/Dialog";
 import { useStore } from "../../../../application/utils/hooks";
@@ -26,50 +26,59 @@ const predefinedCategories = [
   { name: "Pet Care", type: "Expense" },
 ];
 
-const CategoryDialog = ({ show, onClose, existing, onAdd, onUpdate }) => {
-  const [{ categories }] = useStore();
+const CategoryDialog = ({ show, onClose, existing }) => {
+  const {
+    state: { categories },
+    addCategory,
+    updateCategory,
+  } = useStore();
+
   const [showCustom, setShowCustom] = useState(false);
   const [form, setForm] = useState({
     id: null,
     name: "",
     type: "Expense",
-    createdAt: "",
+    created_at: "",
   });
 
   const availablePredefined = predefinedCategories.filter((p) => !categories.some((c) => c.name === p.name));
 
   useEffect(() => {
     if (existing) {
-      setForm(existing);
+      setForm({
+        name: existing.name,
+        type: existing.type,
+      });
       setShowCustom(true);
     } else if (show) {
       setForm({
-        id: null,
         name: "",
         type: "Expense",
-        createdAt: new Date().toISOString().slice(0, 10),
       });
       setShowCustom(false);
     }
-  }, [existing, show, categories]);
+  }, [existing, show]);
 
-  const handleQuickAdd = (p) => {
+  const handleQuickAdd = async (preset) => {
+    await addCategory({
+      name: preset.name,
+      type: preset.type,
+    });
+    onClose();
+  };
+
+  const handleSubmit = async () => {
     const cat = {
-      ...p,
-      id: Date.now(),
-      createdAt: new Date().toISOString().slice(0, 10),
+      name: form.name,
+      type: form.type,
     };
-    onAdd(cat);
+    if (existing) {
+      await updateCategory(existing.id, cat);
+    } else {
+      await addCategory(cat);
+    }
     onClose();
   };
-
-  const handleSubmit = () => {
-    const cat = { ...form, createdAt: new Date().toISOString().slice(0, 10) };
-    if (existing) onUpdate(cat);
-    else onAdd(cat);
-    onClose();
-  };
-
   const canSubmit = showCustom && form.name.trim();
 
   return (
@@ -101,11 +110,11 @@ const CategoryDialog = ({ show, onClose, existing, onAdd, onUpdate }) => {
         <Form>
           <Form.Group className="mb-3">
             <Form.Label>Category Name</Form.Label>
-            <Form.Control value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+            <Form.Control value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} />
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Type</Form.Label>
-            <Form.Select value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })}>
+            <Form.Select value={form.type} onChange={(e) => setForm((f) => ({ ...f, type: e.target.value }))}>
               <option value="Income">Income</option>
               <option value="Expense">Expense</option>
             </Form.Select>

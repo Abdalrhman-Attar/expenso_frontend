@@ -1,16 +1,21 @@
+// src/presentation/components/Dashboard/RecentNotifications/RecentNotifications.jsx
 import { FaTrash, FaExclamationTriangle, FaRegBell, FaInfoCircle } from "react-icons/fa";
-import { useStore } from "../../../../application/utils/hooks";
+import { useStore, useTheme } from "../../../../application/utils/hooks";
 import "./RecentNotifications.css";
 
 const RecentNotifications = () => {
-  const [state, dispatch] = useStore();
-  const recent = [...state.notifications].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
+  const {
+    theme,
+    state: { notifications },
+    removeNotification,
+  } = useStore();
 
-  const handleDelete = (id) => {
-    dispatch({ type: "REMOVE_NOTIFICATION", payload: id });
+  // show the 5 most recent
+  const recent = [...notifications].sort((a, b) => b.scheduled_for - a.scheduled_for).slice(0, 5);
+
+  const handleDelete = async (id) => {
+    await removeNotification(id);
   };
-
- 
 
   const getIconByType = (type) => {
     switch (type) {
@@ -19,27 +24,26 @@ const RecentNotifications = () => {
       case "reminder":
         return <FaRegBell className="notification-type-icon reminder" />;
       case "info":
-        return <FaInfoCircle className="notification-type-icon info" />;
       default:
-        return <FaInfoCircle className="notification-type-icon" />;
+        return <FaInfoCircle className="notification-type-icon info" />;
     }
   };
 
   return (
-    <div className="recent-notifications card">
+    <div className={`recent-notifications card ${theme}-mode`}>
       <div className="rn-header">
         <h4>Recent Notifications</h4>
       </div>
       <ul className="notification-list">
-        {recent.map((n) => (
-          <li key={n.id} className="notification-item">
+        {recent.map((note) => (
+          <li key={note.id} className="notification-item">
             <div className="info">
-              <span className="nt-icon">{getIconByType(n.type)}</span>
-              <span className="message">{n.message}</span>
+              <span className="nt-icon">{getIconByType(note.type)}</span>
+              <span className="message">{note.message}</span>
             </div>
-            <span className="date">{new Date(n.date).toLocaleTimeString()}</span>
+            <span className="date">{note.scheduled_for.toLocaleTimeString()}</span>
             <div className="actions">
-              <FaTrash className="action-icon delete" onClick={() => handleDelete(n.id)} />
+              <FaTrash className="action-icon delete" onClick={() => handleDelete(note.id)} />
             </div>
           </li>
         ))}

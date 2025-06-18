@@ -3,3 +3,4 @@ export * from "./useSidebar";
 export * from "./useStore";
 export * from "./useTheme";
 export * from "./useUserRoles";
+export * from "./useAuthToken";

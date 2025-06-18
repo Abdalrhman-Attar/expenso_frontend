@@ -2,9 +2,8 @@ import { useContext } from "react";
 import { StoreContext } from "../../state/StoreContext";
 
 export function useStore() {
-  const context = useContext(StoreContext);
-  if (!context) {
-    throw new Error("useStore must be used within a StoreProvider");
-  }
-  return [context.state, context.dispatch];
+  const ctx = useContext(StoreContext);
+  if (!ctx) throw new Error("useStore must be inside StoreProvider");
+  // return everything: state, dispatch, plus your new async methods
+  return ctx;
 }

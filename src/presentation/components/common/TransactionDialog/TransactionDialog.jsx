@@ -1,55 +1,59 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import Dialog from "../Dialog/Dialog";
 import { useStore } from "../../../../application/utils/hooks";
 import "./TransactionDialog.css";
 
-const TransactionDialog = ({
-  show,
-  onClose,
-  existing = null,
-}) => {
-  const [state, dispatch] = useStore();
-  const { categories } = state;
+const TransactionDialog = ({ show, onClose, existing = null }) => {
+  const {
+    state: { categories },
+    addTransaction,
+    updateTransaction,
+  } = useStore();
 
-  // form fields
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
-  const [category, setCategory] = useState("");
+  const [category_id, setcategory_id] = useState("");
 
   useEffect(() => {
     if (existing) {
       setDescription(existing.description);
-      setAmount(existing.amount);
-      setDate(existing.date.slice(0, 10));
-      setCategory(existing.category);
+      setAmount(existing.amount.toString());
+      setDate(new Date(existing.date).toISOString().slice(0, 10));
+      setcategory_id(existing.category_id); // use entity field
     } else if (show) {
-      // reset for new
       setDescription("");
       setAmount("");
       setDate(new Date().toISOString().slice(0, 10));
-      setCategory(categories[0]?.name || "");
+      setcategory_id(categories[0]?.id || "");
     }
   }, [existing, categories, show]);
 
-  const canSubmit = description && amount && date && category;
+  const canSubmit = description.trim() && amount && date && category_id;
 
-  const handleSubmit = () => {
-    const selCat = categories.find((c) => c.name === category);
+  const handleSubmit = async () => {
+    const selCat = categories.find((c) => c.id === category_id);
+
+    if (!selCat) {
+      alert("Invalid category selected.");
+      return;
+    }
+
     const payload = {
-      id: existing?.id || Date.now().toString(),
-      description,
+      description: description.trim(),
       amount: parseFloat(amount),
       date,
-      type: selCat?.type.toLowerCase() || "expense",
-      category,
+      type: selCat.type,
+      category_id: selCat.id,
     };
 
-    dispatch({
-      type: existing ? "UPDATE_TRANSACTION" : "ADD_TRANSACTION",
-      payload,
-    });
+    if (existing) {
+      await updateTransaction(existing.id, payload);
+    } else {
+      await addTransaction(payload);
+    }
+
     onClose();
   };
 
@@ -73,9 +77,9 @@ const TransactionDialog = ({
 
         <Form.Group className="td-field">
           <Form.Label>Category</Form.Label>
-          <Form.Select value={category} onChange={(e) => setCategory(e.target.value)}>
+          <Form.Select value={category_id} onChange={(e) => setcategory_id(e.target.value)}>
             {categories.map((cat) => (
-              <option key={cat.id} value={cat.name}>
+              <option key={cat.id} value={cat.id}>
                 {cat.name}
               </option>
             ))}
